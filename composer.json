@@ -1,0 +1,53 @@
+{
+    "name": "vientodigital/laravel-forum",
+    "description": "A Laravel Forum Package",
+    "keywords": [
+        "vientodigital",
+        "laravel-forum"
+    ],
+    "homepage": "https://github.com/vientodigital/laravel-forum",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Victor Yoalli",
+            "email": "victoryoalli@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.7.*|^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vientodigital\\LaravelForum\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vientodigital\\LaravelForum\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Vientodigital\\LaravelForum\\LaravelForumServiceProvider"
+            ],
+            "aliases": {
+                "LaravelForum": "Vientodigital\\LaravelForum\\LaravelForumFacade"
+            }
+        }
+    }
+}
