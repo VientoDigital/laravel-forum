@@ -38,7 +38,7 @@ class Post extends Model
 
     public function editor()
     {
-        return $this->belongsTo('\App\User', 'edited_user_id', 'id');
+        return $this->belongsTo(config('laravel-forum.models.user', 'App\User'), 'edited_user_id', 'id');
     }
 
     /**
