@@ -38,7 +38,7 @@
                 @forelse ($tags as $tag)
                     @if(!$currentTag || $currentTag->id !== $tag->id)
                     <li>
-                        <a 
+                        <a
                             class="badge"
                             style="color: {{$tag->color}}; background: {{$tag->background_color}}"
                             href="javascript:void(0)" onclick="event.preventDefault();tag('{{$tag->slug}}')">
@@ -49,7 +49,7 @@
                 @endforeach
 
             </ul>
-            
+
         </div>
 
         <div class="col-md-9">
@@ -63,7 +63,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <select 
+                    <select
                         id="discussion-sort-selector"
                         class="custom-select mb-3 custom-select-md"
                         onchange="str_sort(this.value)">
@@ -83,10 +83,10 @@
                     </a>
                 </div>
             </div>
-            
 
 
-            
+
+
 
             <table class="table">
                 <tbody>
@@ -106,7 +106,7 @@
                             </div>
                             <small class="text-muted">
                                 @if(!$discussion->lastPost)
-                                    Started by <b>{{ $discussion->user->name }}</b>     
+                                    Started by <b>{{ $discussion->user->name }}</b>
                                     {{$discussion->created_at->diffForHumans()}}
                                 @else
                                     Replied by <b>{{$discussion->lastPost->user->name}}</b>
@@ -117,7 +117,7 @@
                         <td class="text-right">
                             @foreach($discussion->tags as $tag)
                                 @if(!$currentTag || $tag->id !== $currentTag->id)
-                                    <a 
+                                    <a
                                         class="badge"
                                         style="color: {{$tag->color}}; background: {{$tag->background_color}}"
                                         href="javascript:void(0)" onclick="event.preventDefault();tag('{{$tag->slug}}')">
@@ -129,7 +129,7 @@
                                     </span>
                                 @endif
                             @endforeach
-                        </td> 
+                        </td>
                         <td class="text-right text-muted">
                             <i class="far fa-comment"></i>
                             <small>{{$discussion->comment_count}}</small>
@@ -146,7 +146,7 @@
                                     @if($discussion->isRead())
                                     <a class="dropdown-item" href="{{route('discussions.status',['discussion'=>$discussion] )}}?key=read&value=0">
                                         <span class="d-inline-block text-muted text-center" style="width:30px;">
-                                            <i class="far fa-eye-slash"></i> 
+                                            <i class="far fa-eye-slash"></i>
                                         </span>
                                         Set as unread
                                     </a>
@@ -201,22 +201,22 @@
                                         document.getElementById('delete-discussion-{{$discussion->id}}').submit();">
                                             <span class="d-inline-block text-muted text-center" style="width:30px;">
                                                 <i class="fas fa-trash"></i>
-                                            </span>    
+                                            </span>
                                             Delete
                                         </a>
                                         <form id="delete-discussion-{{$discussion->id}}" action="{{ route('discussions.destroy',['discussion'=>$discussion]) }}" method="POST" style="display: none;">
                                             @csrf
                                             @method('DELETE')
                                         </form>
-                                    @endif     
+                                    @endif
                                 </div>
-                            </span>   
+                            </span>
                             @endif
                         </td>
                     </tr>
                     @endforeach
                     <!--Discussions-->
-                    @foreach($discussions as $discussion)
+                    @foreach($discussions->filter(function($d){return !$d->is_private})->all() as $discussion)
                     <tr>
                         <td style="width:60px;" class="text-center">
                             <div avatar="{{$discussion->user->name}}">
@@ -231,7 +231,7 @@
                             </div>
                             <small class="text-muted">
                                 @if(!$discussion->lastPost)
-                                    Started by <b>{{ $discussion->user->name }}</b>     
+                                    Started by <b>{{ $discussion->user->name }}</b>
                                     {{$discussion->created_at->diffForHumans()}}
                                 @else
                                     Replied by <b>{{$discussion->lastPost->user->name}}</b>
@@ -242,7 +242,7 @@
                         <td class="text-right">
                             @foreach($discussion->tags as $tag)
                                 @if(!$currentTag || $tag->id !== $currentTag->id)
-                                    <a 
+                                    <a
                                         class="badge"
                                         style="color: {{$tag->color}}; background: {{$tag->background_color}}"
                                         href="javascript:void(0)" onclick="event.preventDefault();tag('{{$tag->slug}}')">
@@ -254,7 +254,7 @@
                                     </span>
                                 @endif
                             @endforeach
-                        </td> 
+                        </td>
                         <td class="text-right text-muted">
                             <i class="far fa-comment"></i>
                             <small>{{$discussion->comment_count}}</small>
@@ -269,7 +269,7 @@
                                     @if($discussion->isRead())
                                     <a class="dropdown-item" href="{{route('discussions.status',['discussion'=>$discussion] )}}?key=read&value=0">
                                         <span class="d-inline-block text-muted text-center" style="width:30px;">
-                                            <i class="far fa-eye-slash"></i> 
+                                            <i class="far fa-eye-slash"></i>
                                         </span>
                                         Set as unread
                                     </a>
@@ -324,14 +324,14 @@
                                         document.getElementById('delete-discussion-{{$discussion->id}}').submit();">
                                             <span class="d-inline-block text-muted text-center" style="width:30px;">
                                                 <i class="fas fa-trash"></i>
-                                            </span>    
+                                            </span>
                                             Delete
                                         </a>
                                         <form id="delete-discussion-{{$discussion->id}}" action="{{ route('discussions.destroy',['discussion'=>$discussion]) }}" method="POST" style="display: none;">
                                             @csrf
                                             @method('DELETE')
                                         </form>
-                                    @endif     
+                                    @endif
                                 </div>
                             </span>
                         </td>
