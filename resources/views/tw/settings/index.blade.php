@@ -2,10 +2,10 @@
 @section('content')
 <div class="container">
 
-    @if (session('status'))
+    @if (session('laravel-forum-status'))
     <div class="alert alert-success">
 
-        {{ session('status') }}
+        {{ session('laravel-forum-status') }}
     </div>
     @endif
     <h1> Settings </h1>

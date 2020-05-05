@@ -16,10 +16,10 @@
             @endforeach
         </div>
     </div>
-    @if (session('status'))
+    @if (session('laravel-forum-status'))
     <div class="alert alert-success">
 
-        {{ session('status') }}
+        {{ session('laravel-forum-status') }}
     </div>
     @endif
     @forelse($posts as $post)

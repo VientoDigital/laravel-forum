@@ -72,9 +72,9 @@ use Illuminate\Support\Str;
             @endforeach
         </div>
     </div>
-    @if (session('status'))
+    @if (session('laravel-forum-status'))
     <div class="alert alert-success">
-        {{ session('status') }}
+        {{ session('laravel-forum-status') }}
     </div>
     @endif
     @forelse($posts as $post)
@@ -167,7 +167,7 @@ use Illuminate\Support\Str;
     <div class="row py-3 my-3">
         @if(!$discussion->is_locked)
         <div class="col-auto">
-            <div avatar="{{$discussion->user->name}}"></div>
+            <div class="bg-primary-500 font-semibold inline-block p-4 rounded-full text-white" avatar="{{$discussion->user->name}}"></div>
         </div>
         <div class="col">
             <form action="{{route('posts.store')}}" method="POST" id="post-form">

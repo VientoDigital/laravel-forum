@@ -1,10 +1,10 @@
 @extends('laravel-forum::'.config('laravel-forum.views.folder').'shared.layout')
 @section('data')
 <div class="container">
-    @if (session('status'))
+    @if (session('laravel-forum-status'))
     <div class="alert alert-success">
 
-        {{ session('status') }}
+        {{ session('laravel-forum-status') }}
     </div>
     @endif
     <div class="row">

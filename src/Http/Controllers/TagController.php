@@ -59,7 +59,7 @@ class TagController
 
         Tag::create($data);
 
-        return redirect()->route('tags.index')->with('status', __('laravel-forum::words.record_created'));
+        return redirect()->route('tags.index')->with('laravel-forum-status', __('laravel-forum::words.record_created'));
     }
 
     /**
@@ -93,7 +93,7 @@ class TagController
         $tag->fill($data);
         $tag->save();
 
-        return redirect()->route('tags.index')->with('status', __('laravel-forum::words.record_updated'));
+        return redirect()->route('tags.index')->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
     }
 
     /**
@@ -103,7 +103,7 @@ class TagController
     {
         $tag->delete();
 
-        return redirect()->route('tags.index')->with('status', __('laravel-forum::words.record_destroyed'));
+        return redirect()->route('tags.index')->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
     }
 
     /**

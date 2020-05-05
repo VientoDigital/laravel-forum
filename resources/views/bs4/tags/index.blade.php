@@ -2,10 +2,10 @@
 @section('content')
 <div class="container">
 
-    @if (session('status'))
+    @if (session('laravel-forum-status'))
     <div class="alert alert-success">
 
-        {{ session('status') }}
+        {{ session('laravel-forum-status') }}
     </div>
     @endif
     <h1> Tags </h1>
@@ -37,9 +37,8 @@
                         @method('DELETE')
                     </form>
                 </td>
-                <td><span class="badge" 
-                    style="color:{{$tag->color}};background:{{$tag->background_color}}">
-                    {{ $tag->name }}
+                <td><span class="badge" style="color:{{$tag->color}};background:{{$tag->background_color}}">
+                        {{ $tag->name }}
                     </span>
                 </td>
                 <td>{{ $tag->slug   }}</td>

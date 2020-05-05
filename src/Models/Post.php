@@ -59,6 +59,6 @@ class Post extends Model
             $user = intval($userId);
         }
         // If user is post/discussion owner returns true, otherwise false.
-        return $this->user_id === $userId || $this->discussion->canEdit($userId);
+        return $this->user_id === $userId;// || $this->discussion->canEdit($userId);
     }
 }

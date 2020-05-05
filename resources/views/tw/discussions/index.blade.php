@@ -1,37 +1,36 @@
 @extends('laravel-forum::'.config('laravel-forum.views.folder').'shared.layout')
 @section('data')
-<div class="container">
-    @if (session('status'))
+<div class="container mx-auto mt-8">
+    @if (session('laravel-forum-status'))
     <div class="alert alert-success">
-
-        {{ session('status') }}
+        {{ session('laravel-forum-status') }}
     </div>
     @endif
-    <div class="row">
-        <div class="col-md-3">
-
+    <div class="grid grid-cols-4 gap-4">
+        <div class="col-span-1">
             <div class="pb-3">
-                <a class="btn btn-block btn-primary" href="{{route('discussions.create')}}">
+                <a class="inline-block text-center w-full py-2 px-4 rounded bg-primary-500 text-white" href="{{route('discussions.create')}}">
                     New Discussion
                 </a>
             </div>
 
             @if($currentTag)
-            <h6 class="text-muted">
+            <h6 class="text-gray-400">
                 Showing:
-                <a class="badge" style="color: {{$currentTag->color}}; background: {{$currentTag->background_color}}" href="javascript:void(0)" onclick="event.preventDefault();tag(null)">
+                <a class="py-1 px-2 rounded" style="color: {{$currentTag->color}}; background: {{$currentTag->background_color}}" href="javascript:void(0)" onclick="event.preventDefault();tag(null)">
                     {{ $currentTag->name }}
-
-                    <i class="fas fa-times"></i>
+                    <svg class="h-2 w-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" fill-rule="evenodd"></path>
+                    </svg>
                 </a>
             </h6>
             @else
-            <h6 class="text-muted">Showing all discussions</h6>
+            <h6 class="text-gray-400">Showing all discussions</h6>
             @endif
 
-            <h6 class="pt-3">Tags</h6>
+            <h6 class="pt-3 text-gray-400">Tags</h6>
 
-            <ul class="list-unstyled">
+            <ul class="flex flew-wrap">
                 @forelse ($tags as $tag)
                 @if(!$currentTag || $currentTag->id !== $tag->id)
                 <li>
@@ -46,9 +45,9 @@
 
         </div>
 
-        <div class="col-md-9">
-            <div class="input-group mb-3">
-                <input type="text" id="discussion-search-input" class="form-control" placeholder="Search">
+        <div class="col-span-3">
+            <div class="mb-3">
+                <input type="search" id="discussion-search-input" class="border border-gray-300 rounded leading-none py-3 px-4 w-full " placeholder="Search">
                 <div class="input-group-prepend">
                     <button class="btn btn-outline-primary" type="button" onclick="search(document.getElementById('discussion-search-input').value)">
                         <i class="fa fa-search"></i>
@@ -57,7 +56,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <select id="discussion-sort-selector" class="custom-select mb-3 custom-select-md" onchange="str_sort(this.value)">
+                    <select id="discussion-sort-selector" class="border border-gray-300 h-10 w-1/2 rounded bg-white" onchange="str_sort(this.value)">
                         <option value="created_at,DESC">Latest</option>
                         <option value="comment_count,DESC">Hot</option>
                         <option value="created_at,ASC">First</option>
@@ -65,10 +64,12 @@
                 </div>
                 <div class="col-md-6">
                     <a href="{{route('discussions.status.all')}}?key=read&value={{$allRead?0:1}}&ids={{implode(',',$discussionIds)}}" class="btn btn-primary btn-block">
+                        @if(count($stickies) > 1 && count($discussions) > 1)
                         @if($allRead)
                         Unread All
                         @else
                         Read All
+                        @endif
                         @endif
                     </a>
                 </div>
@@ -78,13 +79,13 @@
 
 
 
-            <table class="table">
+            <table class="mt-4 bg-gray-100 rounded-lg border border-gray-200">
                 <tbody>
                     <!--Sticky-->
                     @foreach($stickies as $discussion)
                     <tr class="bg-dark">
                         <td style="width:60px;" class="text-center">
-                            <div avatar="{{$discussion->user->name}}">
+                            <div class="bg-primary-500" avatar="{{$discussion->user->name}}">
                                 JS
                             </div>
                         </td>
@@ -200,8 +201,8 @@
                     <!--Discussions-->
                     @foreach($discussions->filter(function($d){return !$d->is_private;})->all() as $discussion)
                     <tr>
-                        <td style="width:60px;" class="text-center">
-                            <div avatar="{{$discussion->user->name}}">
+                        <td class="p-3 text-center">
+                            <div class="py-4 px-4 rounded-full bg-primary-300" avatar="{{$discussion->user->name}}">
                                 JS
                             </div>
                         </td>

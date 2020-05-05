@@ -15,5 +15,8 @@ return [
     ],
     'views' => [
         'folder' => 'tw.', // '','tw''bs4'
+    ],
+    'roles' => [
+        'admin' => 'admin', //laravel-permissions Admin Role
     ]
 ];

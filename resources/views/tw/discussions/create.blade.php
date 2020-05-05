@@ -1,7 +1,7 @@
 @extends('laravel-forum::'.config('laravel-forum.views.folder').'shared.layout')
 @section('data')
-<div class="container">
-    <h1> Create Discussion </h1>
+<div class="container mx-auto mt-8">
+    <h1 class="text-xl font-semibold"> Create Discussion </h1>
     @if ($errors->any())
     <ul class="alert alert-danger">
         @foreach ($errors->all() as $error)
@@ -12,14 +12,16 @@
 
     <form action="{{route('discussions.store')}}" method="POST" id="form">
         @csrf
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input class="form-control" type="text" name="title" id="title" value="{{old('title')}}" maxlength="200">
-            @if($errors->has('title'))
-            <p class="text-danger">{{$errors->first('title')}}</p>
-            @endif
+        <div class="grid grid-row-2">
+            <label class="font-semibold mt-4 cols-span-1" for="title">Title</label>
+            <div class="mt-2 cols-span-3">
+                <input class="py-2 px-3 border border-gray-300 rounded bg-white w-full" type="text" name="title" id="title" value="{{old('title')}}" maxlength="200">
+                @if($errors->has('title'))
+                <p class="text-danger">{{$errors->first('title')}}</p>
+                @endif
+            </div>
         </div>
-        <div class="form-group">
+        <div class="mt-4 font-semibold">
 
             <div class="form-check form-check-inline">
                 <input class="form-check-input" name="is_private" type="checkbox" id="is_private" boolean value="{{old('is_private', '0')}}">
@@ -38,7 +40,7 @@
                 <label class="form-check-label" for="is_sticky">sticky </label>
             </div>
         </div>
-        <div class="form-group">
+        <div class="mt-4">
             <h2>
                 Tags (
                 <span id="tag-counter">
