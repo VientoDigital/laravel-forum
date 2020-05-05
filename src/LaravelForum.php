@@ -19,7 +19,7 @@ class LaravelForum
 
         // Blog demo, to delete
         App::make('router')->get('blog/mi-prueba', function () {
-            return view('laravel-forum::demo.blog');
+            return view('laravel-forum::' . config('laravel-forum.views.folder') . 'demo.blog');
         })->name('blog.demo');
     }
 

@@ -15,8 +15,7 @@ class TagController
      */
     public function index()
     {
-        $tags = Tag::all();
-
+        $tags = Tag::orderBy('name')->get();
         return view('laravel-forum::tags.index', compact('tags'));
     }
 
@@ -53,8 +52,7 @@ class TagController
         if ($validator->fails()) {
             return redirect()->route('tags.create')
                 ->withErrors($validator)
-                ->withInput()
-            ;
+                ->withInput();
         }
 
         $data['slug'] = $this->makeSlug($data['name']);
@@ -79,7 +77,7 @@ class TagController
     {
         $data = $request->only('name', 'description', 'color', 'background_color');
         $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:100', 'unique:tags,name,'.$tag->id],
+            'name' => ['required', 'string', 'max:100', 'unique:tags,name,' . $tag->id],
             'description' => 'nullable|string|max:500',
             'color' => [new Color()],
             'background_color' => [new Color()],
@@ -87,8 +85,7 @@ class TagController
         if ($validator->fails()) {
             return redirect()->route('tags.edit', ['tag' => $tag])
                 ->withErrors($validator)
-                ->withInput()
-            ;
+                ->withInput();
         }
         if ($data['name'] !== $tag->name) {
             $data['slug'] = $this->makeSlug($data['name']);
@@ -122,7 +119,7 @@ class TagController
 
         $counter = 1;
         while (1) {
-            $test = $slug.'-'.$counter;
+            $test = $slug . '-' . $counter;
             if (!Tag::where('slug', $test)->first()) {
                 return $test;
             }

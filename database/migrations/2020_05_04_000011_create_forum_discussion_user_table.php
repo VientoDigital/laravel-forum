@@ -9,7 +9,7 @@ use Illuminate\Database\Migrations\Migration;
  * @author https://tableplus.com
  * @source https://github.com/TablePlus/tabledump
  */
-class CreateDiscussiontagTable extends Migration
+class CreateForumDiscussionuserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,10 +18,12 @@ class CreateDiscussiontagTable extends Migration
      */
     public function up()
     {
-        Schema::create('discussion_tag', function (Blueprint $table) {
+        Schema::create('forum_discussion_user', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('discussion_id')->unsigned();
-            $table->bigInteger('tag_id')->unsigned();
+            $table->datetime('last_read_at')->nullable();
+            $table->integer('last_read_post_number')->unsigned()->nullable();
             $table->timeStamps();
         });
     }
@@ -33,6 +35,6 @@ class CreateDiscussiontagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('discussion_tag');
+        Schema::dropIfExists('forum_discussion_user');
     }
 }

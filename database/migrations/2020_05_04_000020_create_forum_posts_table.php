@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Schema;
  * @author https://tableplus.com
  * @source https://github.com/TablePlus/tabledump
  */
-class CreatePostsTable extends Migration
+class CreateForumPostsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('forum_posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('discussion_id')->unsigned();
             $table->integer('number')->unsigned()->nullable();
@@ -40,6 +40,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('forum_posts');
     }
 }

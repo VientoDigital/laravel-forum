@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Schema;
  * @author https://tableplus.com
  * @source https://github.com/TablePlus/tabledump
  */
-class CreateTagsTable extends Migration
+class CreateForumTagsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('forum_tags', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', 100);
             $table->string('slug', 100);
@@ -38,6 +38,6 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('forum_tags');
     }
 }

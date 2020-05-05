@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Schema;
  * @author https://tableplus.com
  * @source https://github.com/TablePlus/tabledump
  */
-class CreateDiscussionsTable extends Migration
+class CreateForumDiscussionsTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up()
     {
-        Schema::create('discussions', function (Blueprint $table) {
+        Schema::create('forum_discussions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title', 200);
             $table->string('slug', 255);
@@ -43,6 +43,6 @@ class CreateDiscussionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('discussions');
+        Schema::dropIfExists('forum_discussions');
     }
 }

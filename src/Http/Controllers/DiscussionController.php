@@ -43,7 +43,7 @@ class DiscussionController
         }
 
         return view(
-            'laravel-forum::discussions.index',
+            'laravel-forum::' . config('laravel-forum.views.folder') . 'discussions.index',
             compact('discussionIds', 'allRead', 'user', 'stickies', 'discussions', 'tags', 'currentSort', 'currentTag', 'currentSearch')
         );
     }
@@ -116,13 +116,11 @@ class DiscussionController
             ? $discussion->posts()->orderBy('created_at', 'ASC')->get()
             : $discussion->posts()->where('is_approved', 1)
                 ->orderBy('created_at', 'ASC')
-                ->get()
-            ;
+                ->get();
 
         $discussionUser = DiscussionUser::where('user_id', Auth::user()->id)
             ->where('discussion_id', $discussion->id)
-            ->first()
-        ;
+            ->first();
         if (!$discussionUser) {
             $discussionUser = new DiscussionUser();
             $discussionUser->fill([
@@ -168,8 +166,7 @@ class DiscussionController
         if ($validator->fails()) {
             return redirect()->route('discussions.create')
                 ->withErrors($validator)
-                ->withInput()
-            ;
+                ->withInput();
         }
 
         $data['slug'] = $this->makeSlug($data['title']);
@@ -218,8 +215,7 @@ class DiscussionController
         if ($validator->fails()) {
             return redirect()->route('discussions.edit', ['discussion' => $discussion])
                 ->withErrors($validator)
-                ->withInput()
-            ;
+                ->withInput();
         }
         if ($data['title'] !== $discussion->title) {
             $data['slug'] = $this->makeSlug($data['title']);
@@ -261,8 +257,7 @@ class DiscussionController
         }
         $read = DiscussionUser::where('discussion_id', $discussion->id)
             ->where('user_id', $user)
-            ->first()
-                ;
+            ->first();
         if ($status) {
             if (!$read) {
                 $read = DiscussionUser::create([
@@ -300,14 +295,13 @@ class DiscussionController
         if ($tag) {
             $ids = DiscussionTag::where('tag_id', $tag->id)
                 ->pluck('discussion_id')
-                ->all()
-            ;
+                ->all();
             $query = Discussion::whereIn('id', $ids);
         } else {
             $query = Discussion::where('id', '>', 0);
         }
         if (!empty($search)) {
-            $query->where('title', 'LIKE', '%'.$search.'%');
+            $query->where('title', 'LIKE', '%' . $search . '%');
         }
         if ($sticky) {
             $query->where('is_sticky', 1);
@@ -331,7 +325,7 @@ class DiscussionController
 
         $counter = 1;
         while (1) {
-            $test = $slug.'-'.$counter;
+            $test = $slug . '-' . $counter;
             if (!Discussion::where('slug', $test)->first()) {
                 return $test;
             }
