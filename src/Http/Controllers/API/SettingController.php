@@ -32,7 +32,7 @@ class SettingController
                         ->withInput();
         }
         Setting::create($data);
-        return redirect()->route('settings.index')->with('status', 'Setting created!');
+        return redirect()->route('settings.index')->with('laravel-forum-status', 'Setting created!');
     }
 
     public function edit(Request $request, Setting $setting)
@@ -55,12 +55,12 @@ class SettingController
 
         $setting->fill($data);
         $setting->save();
-        return redirect()->route('settings.index')->with('status', 'Setting updated!');
+        return redirect()->route('settings.index')->with('laravel-forum-status', 'Setting updated!');
     }
 
     public function destroy(Request $request, Setting $setting)
     {
         $setting->delete();
-        return redirect()->route('settings.index')->with('status', 'Setting destroyed!');
+        return redirect()->route('settings.index')->with('laravel-forum-status', 'Setting destroyed!');
     }
 }

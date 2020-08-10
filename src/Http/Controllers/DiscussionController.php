@@ -43,7 +43,7 @@ class DiscussionController
         }
 
         return view(
-            'laravel-forum::discussions.index',
+            'laravel-forum::' . config('laravel-forum.views.folder') . 'discussions.index',
             compact('discussionIds', 'allRead', 'user', 'stickies', 'discussions', 'tags', 'currentSort', 'currentTag', 'currentSearch')
         );
     }
@@ -69,7 +69,7 @@ class DiscussionController
             break;
         }
 
-        return back()->with('status', __('laravel-forum::words.status_changed'));
+        return back()->with('laravel-forum-status', __('laravel-forum::words.status_changed'));
     }
 
     /**
@@ -100,7 +100,7 @@ class DiscussionController
             break;
         }
 
-        return back()->with('status', __('laravel-forum::words.status_changed'));
+        return back()->with('laravel-forum-status', __('laravel-forum::words.status_changed'));
     }
 
     /**
@@ -116,13 +116,11 @@ class DiscussionController
             ? $discussion->posts()->orderBy('created_at', 'ASC')->get()
             : $discussion->posts()->where('is_approved', 1)
                 ->orderBy('created_at', 'ASC')
-                ->get()
-            ;
+                ->get();
 
         $discussionUser = DiscussionUser::where('user_id', Auth::user()->id)
             ->where('discussion_id', $discussion->id)
-            ->first()
-        ;
+            ->first();
         if (!$discussionUser) {
             $discussionUser = new DiscussionUser();
             $discussionUser->fill([
@@ -134,7 +132,7 @@ class DiscussionController
         $discussionUser->last_read_post_number = $discussion->post_number_index;
         $discussionUser->save();
 
-        return view('laravel-forum::discussions.show', compact('discussion', 'posts'));
+        return view('laravel-forum::' . config('laravel-forum.views.folder') . 'discussions.show', compact('discussion', 'posts'));
     }
 
     /**
@@ -144,7 +142,7 @@ class DiscussionController
     {
         $tags = Tag::orderBy('name')->get();
 
-        return view('laravel-forum::discussions.create', compact('tags'));
+        return view('laravel-forum::' . config('laravel-forum.views.folder') . 'discussions.create', compact('tags'));
     }
 
     /**
@@ -168,8 +166,7 @@ class DiscussionController
         if ($validator->fails()) {
             return redirect()->route('discussions.create')
                 ->withErrors($validator)
-                ->withInput()
-            ;
+                ->withInput();
         }
 
         $data['slug'] = $this->makeSlug($data['title']);
@@ -177,7 +174,7 @@ class DiscussionController
         $discussion = Discussion::create($data);
         $this->setTags($discussion, isset($data['tags']) ? $data['tags'] : []);
 
-        return redirect()->route('forum.index')->with('status', __('laravel-forum::words.record_created'));
+        return redirect()->route('forum.index')->with('laravel-forum-status', __('laravel-forum::words.record_created'));
     }
 
     /**
@@ -197,7 +194,7 @@ class DiscussionController
             }
         }
 
-        return view('laravel-forum::discussions.edit', compact('discussion', 'tags', 'discussionTags'));
+        return view('laravel-forum::' . config('laravel-forum.views.folder') . 'discussions.edit', compact('discussion', 'tags', 'discussionTags'));
     }
 
     /**
@@ -218,8 +215,7 @@ class DiscussionController
         if ($validator->fails()) {
             return redirect()->route('discussions.edit', ['discussion' => $discussion])
                 ->withErrors($validator)
-                ->withInput()
-            ;
+                ->withInput();
         }
         if ($data['title'] !== $discussion->title) {
             $data['slug'] = $this->makeSlug($data['title']);
@@ -228,7 +224,7 @@ class DiscussionController
         $discussion->save();
         $this->setTags($discussion, isset($data['tags']) ? $data['tags'] : []);
 
-        return redirect()->route('forum.index')->with('status', __('laravel-forum::words.record_updated'));
+        return redirect()->route('forum.index')->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
     }
 
     /**
@@ -238,7 +234,7 @@ class DiscussionController
     {
         $discussion->delete();
 
-        return redirect()->route('forum.index')->with('status', __('laravel-forum::words.record_destroyed'));
+        return redirect()->route('forum.index')->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
     }
 
     /**
@@ -261,8 +257,7 @@ class DiscussionController
         }
         $read = DiscussionUser::where('discussion_id', $discussion->id)
             ->where('user_id', $user)
-            ->first()
-                ;
+            ->first();
         if ($status) {
             if (!$read) {
                 $read = DiscussionUser::create([
@@ -300,14 +295,13 @@ class DiscussionController
         if ($tag) {
             $ids = DiscussionTag::where('tag_id', $tag->id)
                 ->pluck('discussion_id')
-                ->all()
-            ;
+                ->all();
             $query = Discussion::whereIn('id', $ids);
         } else {
             $query = Discussion::where('id', '>', 0);
         }
         if (!empty($search)) {
-            $query->where('title', 'LIKE', '%'.$search.'%');
+            $query->where('title', 'LIKE', '%' . $search . '%');
         }
         if ($sticky) {
             $query->where('is_sticky', 1);
@@ -331,7 +325,7 @@ class DiscussionController
 
         $counter = 1;
         while (1) {
-            $test = $slug.'-'.$counter;
+            $test = $slug . '-' . $counter;
             if (!Discussion::where('slug', $test)->first()) {
                 return $test;
             }

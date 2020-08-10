@@ -30,7 +30,7 @@ class Discussion extends Model
 
     public function user()
     {
-        return $this->belongsTo(config('laravel-forum.models.user', 'App\User'), 'user_id', 'id');
+        return $this->belongsTo(config('laravel-forum.models.user', 'App\Models\User'), 'user_id', 'id');
     }
 
     public function posts()
@@ -60,8 +60,7 @@ class Discussion extends Model
         }
         $read = DiscussionUser::where('user_id', $userId)
             ->where('discussion_id', $this->id)
-            ->first()
-        ;
+            ->first();
 
         return $read && $this->post_number_index === $read->last_read_post_number;
     }

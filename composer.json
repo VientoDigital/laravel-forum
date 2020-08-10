@@ -1,5 +1,5 @@
 {
-    "name": "vientodigital/laravel-forum",
+    "name": "victoryoalli/laravel-forum",
     "description": "A Laravel Forum Package",
     "keywords": [
         "vientodigital",
@@ -17,7 +17,9 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/support": "5.7.*|^6.0|^7.0"
+        "illuminate/support": "5.7.*|^6.0|^7.0",
+        "livewire/livewire": "^1.2"
+
     },
     "require-dev": {
         "orchestra/testbench": "3.8.*",

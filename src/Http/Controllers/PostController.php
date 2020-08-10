@@ -18,7 +18,7 @@ class PostController
     {
         if (!$post->canEdit(Auth::user()->id)) {
             // Forbidden
-            dd('No');
+            
         }
         $key = $request->get('key');
         $value = 1 === intval($request->get('value', 0));
@@ -43,8 +43,10 @@ class PostController
             break;
         }
         $post->save();
-
-        return back()->with('status', __('laravel-forum::words.record_updated'));
+        if($request->back_url!=null){
+            return redirect()->to($request->back_url);
+        }
+        return back()->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
     }
 
     /**
@@ -57,7 +59,7 @@ class PostController
         $redirectTo = $request->get('from', 'posts');
 
         $validator = Validator::make($data, [
-            'discussion_id' => ['required', 'numeric', 'exists:discussions,id'],
+            'discussion_id' => ['required', 'numeric', 'exists:' . config('laravel-forum.table_names.discussions') . ',id'],
             'content' => ['required', 'string', 'min:5', 'max:1000'],
         ]);
 
@@ -67,8 +69,7 @@ class PostController
             if ('discussion' === $redirectTo) {
                 return redirect()->route('discussions.show', ['discussion' => $discussion->slug])
                     ->withErrors($validator)
-                    ->withInput()
-                ;
+                    ->withInput();
             }
             if (is_string($redirectTo) && !empty($redirectTo)) {
                 return redirect()->route($redirectTo)->withErrors($validator)->withInput();
@@ -76,8 +77,7 @@ class PostController
             redirect()
                 ->route('posts.create')
                 ->withErrors($validator)
-                ->withInput()
-                ;
+                ->withInput();
         }
 
         $data['user_id'] = Auth::user()->id;
@@ -99,14 +99,19 @@ class PostController
         }
         $discussion->save();
 
-        if ('discussion' === $redirectTo) {
-            return redirect()->route('discussions.show', ['discussion' => $discussion->slug])->with('status', __('laravel-forum::words.record_created'));
-        }
-        if (is_string($redirectTo) && !empty($redirectTo)) {
-            return redirect()->route($redirectTo)->with('status', __('laravel-forum::words.record_created'));
+        if($request->back_url!=null){
+            return redirect()->to($request->back_url);
         }
 
-        return redirect()->route('posts.index')->with('status', __('laravel-forum::words.record_created'));
+        if ('discussion' === $redirectTo) {
+            return redirect()->route('discussions.show', ['discussion' => $discussion->slug])->with('laravel-forum-status', __('laravel-forum::words.record_created'));
+        }
+        if (is_string($redirectTo) && !empty($redirectTo)) {
+            // return redirect()->route($redirectTo)->with('laravel-forum-status', __('laravel-forum::words.record_created'));
+            return redirect()->back();
+        }
+
+        return redirect()->route('posts.index')->with('laravel-forum-status', __('laravel-forum::words.record_created'));
     }
 
     /**
@@ -127,15 +132,20 @@ class PostController
         $post->fill($data);
         $post->save();
         $discussion = $post->discussion;
+        
+        if($request->back_url!=null){
+            return redirect()->to($request->back_url);
+        }
+
 
         if ('discussion' === $redirectTo) {
-            return redirect()->route('discussions.show', ['discussion' => $discussion->slug])->with('status', __('laravel-forum::words.record_updated'));
+            return redirect()->route('discussions.show', ['discussion' => $discussion->slug])->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
         }
         if (is_string($redirectTo) && !empty($redirectTo)) {
-            return redirect()->route($redirectTo)->with('status', __('laravel-forum::words.record_updated'));
+            return redirect()->route($redirectTo)->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
         }
 
-        return redirect()->route('posts.index')->with('status', __('laravel-forum::words.record_updated'));
+        return redirect()->route('posts.index')->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
     }
 
     /**
@@ -151,13 +161,17 @@ class PostController
         $discussion->comment_count = ($discussion->comment_count - 1);
         $discussion->save();
 
-        if ('discussion' === $redirectTo) {
-            return redirect()->route('discussions.show', ['discussion' => $discussion->slug])->with('status', __('laravel-forum::words.record_destroyed'));
-        }
-        if (is_string($redirectTo) && !empty($redirectTo)) {
-            return redirect()->route($redirectTo)->with('status', __('laravel-forum::words.record_destroyed'));
+        if($request->back_url!=null){
+            return redirect()->to($request->back_url);
         }
 
-        return redirect()->route('posts.index')->with('status', __('laravel-forum::words.record_destroyed'));
+        if ('discussion' === $redirectTo) {
+            return redirect()->route('discussions.show', ['discussion' => $discussion->slug])->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
+        }
+        if (is_string($redirectTo) && !empty($redirectTo)) {
+            return redirect()->route($redirectTo)->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
+        }
+
+        return redirect()->route('posts.index')->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
     }
 }
