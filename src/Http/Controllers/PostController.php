@@ -18,7 +18,7 @@ class PostController
     {
         if (!$post->canEdit(Auth::user()->id)) {
             // Forbidden
-            dd('No');
+            
         }
         $key = $request->get('key');
         $value = 1 === intval($request->get('value', 0));

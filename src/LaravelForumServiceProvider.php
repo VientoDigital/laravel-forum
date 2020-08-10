@@ -3,6 +3,9 @@
 namespace Vientodigital\LaravelForum;
 
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use Vientodigital\LaravelForum\Http\Livewire\Forum\Comment;
+use Vientodigital\LaravelForum\Http\Livewire\Forum\Comments;
 
 class LaravelForumServiceProvider extends ServiceProvider
 {
@@ -34,6 +37,8 @@ class LaravelForumServiceProvider extends ServiceProvider
                 __DIR__.'/../resources/assets' => public_path('vendor/laravel-forum'),
             ], 'assets');*/
         }
+        Livewire::component('forum.comment', Comment::class);
+        Livewire::component('forum.comments', Comments::class);
     }
 
     /**

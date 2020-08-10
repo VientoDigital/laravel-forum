@@ -30,7 +30,7 @@ class Discussion extends Model
 
     public function user()
     {
-        return $this->belongsTo(config('laravel-forum.models.user', 'App\User'), 'user_id', 'id');
+        return $this->belongsTo(config('laravel-forum.models.user', 'App\Models\User'), 'user_id', 'id');
     }
 
     public function posts()
