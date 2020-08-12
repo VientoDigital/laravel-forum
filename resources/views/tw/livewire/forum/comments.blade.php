@@ -3,7 +3,7 @@
     <div class="flex items-start md:mx-4">
         <div class="w-16 hidden md:block">
             <div class="bg-primary-500 font-semibold inline-block mt-3 mx-auto p-3 rounded-full text-white">
-                {{substr($post->user->name, 0,1)}}
+                {{str($post->user->name)->upper()->initials()}}
             </div>
         </div>
         <div class="bg-gray-100 mt-3 p-3 rounded w-full">

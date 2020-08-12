@@ -3,9 +3,12 @@
 namespace Vientodigital\LaravelForum;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Livewire\Livewire;
 use Vientodigital\LaravelForum\Http\Livewire\Forum\Comment;
 use Vientodigital\LaravelForum\Http\Livewire\Forum\Comments;
+use Illuminate\Support\Stringable;
+
 
 class LaravelForumServiceProvider extends ServiceProvider
 {
@@ -39,6 +42,20 @@ class LaravelForumServiceProvider extends ServiceProvider
         }
         Livewire::component('forum.comment', Comment::class);
         Livewire::component('forum.comments', Comments::class);
+
+        Str::macro('initials', function ($string, $number = 2) {
+            $words = preg_split("/[\s,_-]+/", $string);
+            $number = (count($words) > $number)?$number:count($words);
+            $acronym = '';
+            for ($i = 0; $i < $number; $i++) {
+                $acronym .= $words[$i][0];
+            }
+
+            return $acronym;
+        });
+        Stringable::macro('initials', function ($number = 2) {
+            return new static(Str::initials($this->value, $number));
+        });
     }
 
     /**

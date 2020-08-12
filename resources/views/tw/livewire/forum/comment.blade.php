@@ -1,7 +1,7 @@
 <div class="flex justify-between items-base py-3 my-3 md:mx-4">
 <div class="mt-4 w-16 hidden md:block">
     <div class="bg-primary-500 font-semibold inline-block p-3 rounded-full text-white">
-        {{substr($avatar, 0,1)}}
+        {{str($avatar)->upper()->initials()}}
     </div>
 </div>
 <div class="mt-4 w-full">
