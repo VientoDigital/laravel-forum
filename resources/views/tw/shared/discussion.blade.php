@@ -44,6 +44,9 @@ $posts = ($discussion->canEdit())
     : $discussion->posts()->where('is_approved', 1)
     ->orderBy('created_at', 'ASC')
     ->get();
+
+
+if(Auth::check()){
 //Store current user "read"
 $discussionUser = DiscussionUser::where('user_id', Auth::user()->id)
     ->where('discussion_id', $discussion->id)
@@ -58,6 +61,7 @@ if (!$discussionUser) {
 $discussionUser->last_read_at = Carbon::now()->toDateTimeString();
 $discussionUser->last_read_post_number = $discussion->post_number_index;
 $discussionUser->save();
+}
 ?>
 <div class="">
     <div class="mt-2 flex">
@@ -200,6 +204,7 @@ $discussionUser->save();
     </div>
     @endforelse--}}
 
+    @if(Auth::check())
     <div class="">
         @if(!$discussion->is_locked)
             @livewire('forum.comment', ['discussion' => $discussion,'user'=>Auth::user()->name])
@@ -209,6 +214,7 @@ $discussionUser->save();
         </>
         @endif
     </div>
+    @endif
 </div>
 
 @include('laravel-forum::'.config('laravel-forum.views.folder').'shared.scripts.avatar')
