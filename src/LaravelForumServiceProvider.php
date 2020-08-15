@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
 use Vientodigital\LaravelForum\Http\Livewire\Forum\Comment;
+use Vientodigital\LaravelForum\Http\Livewire\Forum\CommentEdit;
 use Vientodigital\LaravelForum\Http\Livewire\Forum\Comments;
 use Illuminate\Support\Stringable;
 
@@ -41,6 +42,7 @@ class LaravelForumServiceProvider extends ServiceProvider
             ], 'assets');*/
         }
         Livewire::component('forum.comment', Comment::class);
+        Livewire::component('forum.comment-edit', CommentEdit::class);
         Livewire::component('forum.comments', Comments::class);
 
         Str::macro('initials', function ($string, $number = 2) {
