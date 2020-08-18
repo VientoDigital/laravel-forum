@@ -164,7 +164,7 @@ class DiscussionController
 
         $data['user_id'] = Auth::user()->id;
         if ($validator->fails()) {
-            return redirect()->route('discussions.create')
+            return redirect()->route(config('laravel-forum.name_prefix').'discussions.create')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -174,7 +174,7 @@ class DiscussionController
         $discussion = Discussion::create($data);
         $this->setTags($discussion, isset($data['tags']) ? $data['tags'] : []);
 
-        return redirect()->route('forum.index')->with('laravel-forum-status', __('laravel-forum::words.record_created'));
+        return redirect()->route(config('laravel-forum.name_prefix').'forum.index')->with('laravel-forum-status', __('laravel-forum::words.record_created'));
     }
 
     /**
@@ -213,7 +213,7 @@ class DiscussionController
             'tags.*' => ['numeric', 'exists:tags,id'],
         ]);
         if ($validator->fails()) {
-            return redirect()->route('discussions.edit', ['discussion' => $discussion])
+            return redirect()->route(config('laravel-forum.name_prefix').'discussions.edit', ['discussion' => $discussion])
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -224,7 +224,7 @@ class DiscussionController
         $discussion->save();
         $this->setTags($discussion, isset($data['tags']) ? $data['tags'] : []);
 
-        return redirect()->route('forum.index')->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
+        return redirect()->route(config('laravel-forum.name_prefix').'forum.index')->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
     }
 
     /**
@@ -234,7 +234,7 @@ class DiscussionController
     {
         $discussion->delete();
 
-        return redirect()->route('forum.index')->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
+        return redirect()->route(config('laravel-forum.name_prefix').'forum.index')->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
     }
 
     /**
