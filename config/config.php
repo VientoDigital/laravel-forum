@@ -18,5 +18,6 @@ return [
     ],
     'roles' => [
         'admin' => 'admin', //laravel-permissions Admin Role
-    ]
+    ],
+    'name_prefix'=>'forum.'
 ];

@@ -17,7 +17,7 @@ if (!isset($discussion)) {
         //If no config, we set common config.
         if (!isset($config) || is_array($config)) {
             $config = [
-                'is_private' => 0,
+                'is_private' => 1,
                 'is_approved' => 1,
                 'is_sticky' => 0,
                 'is_locked' => 0,
