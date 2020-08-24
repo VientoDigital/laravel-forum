@@ -19,10 +19,6 @@ class LaravelForum
             App::make('router')->resource('tags', '\Vientodigital\LaravelForum\Http\Controllers\TagController');
             App::make('router')->resource('posts', '\Vientodigital\LaravelForum\Http\Controllers\PostController');
 
-            // Blog demo, to delete
-            App::make('router')->get('blog/mi-prueba', function () {
-                return view('laravel-forum::' . config('laravel-forum.views.folder') . 'demo.blog');
-            })->name('blog.demo');
         });
     }
 
