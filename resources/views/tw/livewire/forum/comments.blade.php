@@ -1,6 +1,6 @@
 <div wire:poll.5000ms>
     @forelse($posts as $post)
-    <div x-data="{dropdown:false,edit:false}" class="flex items-start md:mx-4 pb-4">
+    <div x-data="{dropdown:false,edit:false}" x-init="edit=false;dropdown=false" class="flex items-start md:mx-4 pb-4">
         <div class="w-16 hidden md:block">
             <div class="bg-primary-500 font-semibold inline-block mt-3 mx-auto p-3 rounded-full text-white">
                 {{Str::of($post->user->name)->upper()->initials()}}
@@ -13,6 +13,11 @@
                         <span class="text-primary-500 font-semibold">
                             {{ $post->user->name }}
                         </span>
+                        @if(!$post->is_approved)
+                        <span class="text-xs text-red-500">
+                            (Mensaje Desaprobado)
+                        </span>
+                        @endif
                         {!! nl2br(e($post->content)) !!}
                     </p>
                 </div>
