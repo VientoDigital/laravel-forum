@@ -6,6 +6,7 @@ use Livewire\Component;
 use Vientodigital\LaravelForum\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Vientodigital\LaravelForum\Events\CommentEvent;
 
 class Comment extends Component
 {
@@ -15,16 +16,17 @@ class Comment extends Component
 
     const COMMENT_UPLOADED = 'commentUploaded';
 
-    public function mount($discussion,$user){
+    public function mount($discussion, $user)
+    {
         $this->discussion = $discussion;
         $this->avatar = $user;
     }
     public function render()
-    {   
+    {
         return view('laravel-forum::tw.livewire.forum.comment');
     }
-    public function save(Request $request){
-
+    public function save(Request $request)
+    {
         $validatedData = $this->validate([
             'content' => 'required|min:2',
         ]);
@@ -54,6 +56,6 @@ class Comment extends Component
         $this->content = '';
 
         $this->emit(self::COMMENT_UPLOADED);
+        CommentEvent::dispatch(Auth::user(), $discussion, $post);
     }
-    
 }
