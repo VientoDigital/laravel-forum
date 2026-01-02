@@ -2,6 +2,7 @@
 
 namespace Vientodigital\LaravelForum\Http\Livewire\Forum;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,6 @@ use Carbon\Carbon;
 
 class Comments extends Component
 {
-    public $listeners = [Comment::COMMENT_UPLOADED => 'reload',CommentEdit::COMMENT_UPDATED => 'reload'];
     public $discussion;
     public $comment = [];
     public function mount($discussion,$posts){
@@ -23,6 +23,8 @@ class Comments extends Component
         return view('laravel-forum::tw.livewire.forum.comments',$data);
     }
 
+    #[On('commentUploaded')]
+    #[On('commentUpdated')]
     public function reload()
     {
         $this->posts=[];

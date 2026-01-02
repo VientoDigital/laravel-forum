@@ -55,7 +55,7 @@ class Comment extends Component
         $this->discussion = $discussion;
         $this->content = '';
 
-        $this->emit(self::COMMENT_UPLOADED);
+        $this->dispatch(self::COMMENT_UPLOADED);
         CommentEvent::dispatch(Auth::user(), $discussion, $post);
     }
 }

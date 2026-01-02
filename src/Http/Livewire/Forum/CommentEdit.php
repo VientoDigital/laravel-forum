@@ -28,7 +28,7 @@ class CommentEdit extends Component
     {
         $this->post->content = $this->comment;
         $this->post->save();
-        $this->emit(self::COMMENT_UPDATED);
+        $this->dispatch(self::COMMENT_UPDATED);
         CommentEvent::dispatch(Auth::user(), $this->post->discussion, $this->post, 'updated');
     }
 }
