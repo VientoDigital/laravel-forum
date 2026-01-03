@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Laravel package (`vientodigital/laravel-forum`) that provides a drop-in forum system for Laravel applications. It includes discussions, posts/comments, tags, and real-time updates via Livewire.
 
-**Requirements:** PHP ^8.2, Laravel 10.x/11.x/12.x, Livewire ^3.0
+**Requirements:** PHP ^8.2, Laravel 11.x/12.x, Livewire ^3.0
 
 ## Common Commands
 

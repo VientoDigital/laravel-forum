@@ -9,7 +9,7 @@ An easy to integrate forum to your laravel project. Just customize views, migrat
 ## Requirements
 
 - PHP ^8.2
-- Laravel 10.x, 11.x, or 12.x
+- Laravel 11.x or 12.x
 - Livewire ^3.0
 
 ## Installation
