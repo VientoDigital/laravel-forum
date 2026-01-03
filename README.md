@@ -2,6 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/vientodigital/laravel-forum.svg?style=flat-square)](https://packagist.org/packages/vientodigital/laravel-forum)
 [![Tests](https://github.com/VientoDigital/laravel-forum/actions/workflows/tests.yml/badge.svg)](https://github.com/VientoDigital/laravel-forum/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/VientoDigital/laravel-forum/branch/main/graph/badge.svg)](https://codecov.io/gh/VientoDigital/laravel-forum)
 [![Total Downloads](https://img.shields.io/packagist/dt/vientodigital/laravel-forum.svg?style=flat-square)](https://packagist.org/packages/vientodigital/laravel-forum)
 
 An easy to integrate forum to your laravel project. Just customize views, migrations routes and you are done.
