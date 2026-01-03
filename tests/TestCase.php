@@ -3,8 +3,10 @@
 namespace Vientodigital\LaravelForum\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Route;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Vientodigital\LaravelForum\LaravelForum;
 use Vientodigital\LaravelForum\LaravelForumServiceProvider;
 
 abstract class TestCase extends Orchestra
@@ -17,6 +19,17 @@ abstract class TestCase extends Orchestra
 
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+    }
+
+    protected function setUpRoutes(): void
+    {
+        Route::middleware(['web'])->group(function () {
+            (new LaravelForum())->routes();
+        });
+
+        Route::middleware(['api'])->prefix('api')->group(function () {
+            (new LaravelForum())->apiRoutes();
+        });
     }
 
     protected function getPackageProviders($app): array

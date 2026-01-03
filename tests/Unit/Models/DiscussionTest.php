@@ -4,6 +4,7 @@ namespace Vientodigital\LaravelForum\Tests\Unit\Models;
 
 use PHPUnit\Framework\Attributes\Test;
 use Vientodigital\LaravelForum\Models\Discussion;
+use Vientodigital\LaravelForum\Models\Discussion\User as DiscussionUser;
 use Vientodigital\LaravelForum\Models\Post;
 use Vientodigital\LaravelForum\Models\Tag;
 use Vientodigital\LaravelForum\Tests\Fixtures\User;
@@ -174,5 +175,95 @@ class DiscussionTest extends TestCase
 
         $this->assertCount(1, $discussion->tags);
         $this->assertEquals('General', $discussion->tags->first()->name);
+    }
+
+    #[Test]
+    public function it_has_last_post_relationship(): void
+    {
+        $user = User::create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ]);
+
+        $discussion = Discussion::create([
+            'title' => 'Test Discussion',
+            'slug' => 'test-discussion',
+            'user_id' => $user->id,
+        ]);
+
+        $firstPost = Post::create([
+            'discussion_id' => $discussion->id,
+            'user_id' => $user->id,
+            'content' => 'First post',
+            'number' => 1,
+        ]);
+        $firstPost->created_at = now()->subHour();
+        $firstPost->save();
+
+        $lastPost = Post::create([
+            'discussion_id' => $discussion->id,
+            'user_id' => $user->id,
+            'content' => 'Last post',
+            'number' => 2,
+        ]);
+
+        $discussion->refresh();
+        $this->assertEquals($lastPost->id, $discussion->lastPost->id);
+    }
+
+    #[Test]
+    public function it_can_check_if_discussion_is_read(): void
+    {
+        $user = User::create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ]);
+
+        $discussion = Discussion::create([
+            'title' => 'Test Discussion',
+            'slug' => 'test-discussion',
+            'user_id' => $user->id,
+            'post_number_index' => 5,
+        ]);
+
+        // Not read yet
+        $this->assertFalse($discussion->isRead($user->id));
+
+        // Mark as read
+        DiscussionUser::create([
+            'discussion_id' => $discussion->id,
+            'user_id' => $user->id,
+            'last_read_post_number' => 5,
+        ]);
+
+        $this->assertTrue($discussion->isRead($user->id));
+    }
+
+    #[Test]
+    public function it_returns_false_for_partially_read_discussion(): void
+    {
+        $user = User::create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+        ]);
+
+        $discussion = Discussion::create([
+            'title' => 'Test Discussion',
+            'slug' => 'test-discussion',
+            'user_id' => $user->id,
+            'post_number_index' => 10,
+        ]);
+
+        // User has only read up to post 5
+        DiscussionUser::create([
+            'discussion_id' => $discussion->id,
+            'user_id' => $user->id,
+            'last_read_post_number' => 5,
+        ]);
+
+        $this->assertFalse($discussion->isRead($user->id));
     }
 }

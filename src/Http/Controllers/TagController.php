@@ -43,14 +43,14 @@ class TagController
         $data = $request->only('name', 'description', 'color', 'background_color');
 
         $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:100', 'unique:tags,name'],
+            'name' => ['required', 'string', 'max:100', 'unique:' . config('laravel-forum.table_names.tags') . ',name'],
             'description' => 'nullable|string|max:500',
             'color' => [new Color()],
             'background_color' => [new Color()],
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('tags.create')
+            return redirect()->route(config('laravel-forum.name_prefix') . 'tags.create')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -59,7 +59,7 @@ class TagController
 
         Tag::create($data);
 
-        return redirect()->route('tags.index')->with('laravel-forum-status', __('laravel-forum::words.record_created'));
+        return redirect()->route(config('laravel-forum.name_prefix') . 'tags.index')->with('laravel-forum-status', __('laravel-forum::words.record_created'));
     }
 
     /**
@@ -77,13 +77,13 @@ class TagController
     {
         $data = $request->only('name', 'description', 'color', 'background_color');
         $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'max:100', 'unique:tags,name,' . $tag->id],
+            'name' => ['required', 'string', 'max:100', 'unique:' . config('laravel-forum.table_names.tags') . ',name,' . $tag->id],
             'description' => 'nullable|string|max:500',
             'color' => [new Color()],
             'background_color' => [new Color()],
         ]);
         if ($validator->fails()) {
-            return redirect()->route('tags.edit', ['tag' => $tag])
+            return redirect()->route(config('laravel-forum.name_prefix') . 'tags.edit', ['tag' => $tag])
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -93,7 +93,7 @@ class TagController
         $tag->fill($data);
         $tag->save();
 
-        return redirect()->route('tags.index')->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
+        return redirect()->route(config('laravel-forum.name_prefix') . 'tags.index')->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
     }
 
     /**
@@ -103,7 +103,7 @@ class TagController
     {
         $tag->delete();
 
-        return redirect()->route('tags.index')->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
+        return redirect()->route(config('laravel-forum.name_prefix') . 'tags.index')->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
     }
 
     /**

@@ -159,7 +159,7 @@ class DiscussionController
             'is_locked' => ['nullable', 'boolean'],
             'is_sticky' => ['nullable', 'boolean'],
             'tags' => ['nullable', 'array'],
-            'tags.*' => ['numeric', 'exists:tags,id'],
+            'tags.*' => ['numeric', 'exists:' . config('laravel-forum.table_names.tags') . ',id'],
         ]);
 
         $data['user_id'] = Auth::user()->id;
@@ -210,7 +210,7 @@ class DiscussionController
             'is_locked' => ['nullable', 'boolean'],
             'is_sticky' => ['nullable', 'boolean'],
             'tags' => ['nullable', 'array'],
-            'tags.*' => ['numeric', 'exists:tags,id'],
+            'tags.*' => ['numeric', 'exists:' . config('laravel-forum.table_names.tags') . ',id'],
         ]);
         if ($validator->fails()) {
             return redirect()->route(config('laravel-forum.name_prefix').'discussions.edit', ['discussion' => $discussion])

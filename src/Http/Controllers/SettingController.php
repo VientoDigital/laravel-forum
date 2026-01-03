@@ -30,17 +30,17 @@ class SettingController
     {
         $data = $request->all();
         $validator = Validator::make($data, [
-            'key' => 'required|unique:settings,key',
+            'key' => 'required|unique:' . config('laravel-forum.table_names.settings') . ',key',
             'value' => 'required',
         ]);
         if ($validator->fails()) {
-            return redirect()->route('settings.create')
+            return redirect()->route(config('laravel-forum.name_prefix') . 'settings.create')
                 ->withErrors($validator)
                 ->withInput();
         }
         Setting::create($data);
 
-        return redirect()->route('settings.index')->with('laravel-forum-status', __('laravel-forum::words.record_created'));
+        return redirect()->route(config('laravel-forum.name_prefix') . 'settings.index')->with('laravel-forum-status', __('laravel-forum::words.record_created'));
     }
 
     public function edit(Request $request, Setting $setting)
@@ -54,12 +54,12 @@ class SettingController
         $validator = Validator::make($data, [
             'key' => [
                 'required',
-                Rule::unique('settings')->ignore($setting->key, 'key'),
+                Rule::unique(config('laravel-forum.table_names.settings'))->ignore($setting->key, 'key'),
             ],
             'value' => 'required',
         ]);
         if ($validator->fails()) {
-            return redirect()->route('settings.edit', ['setting' => $setting])
+            return redirect()->route(config('laravel-forum.name_prefix') . 'settings.edit', ['setting' => $setting])
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -67,13 +67,13 @@ class SettingController
         $setting->fill($data);
         $setting->save();
 
-        return redirect()->route('settings.index')->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
+        return redirect()->route(config('laravel-forum.name_prefix') . 'settings.index')->with('laravel-forum-status', __('laravel-forum::words.record_updated'));
     }
 
     public function destroy(Request $request, Setting $setting)
     {
         $setting->delete();
 
-        return redirect()->route('settings.index')->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
+        return redirect()->route(config('laravel-forum.name_prefix') . 'settings.index')->with('laravel-forum-status', __('laravel-forum::words.record_destroyed'));
     }
 }

@@ -170,4 +170,38 @@ class PostTest extends TestCase
             'id' => $post->id,
         ]);
     }
+
+    #[Test]
+    public function it_has_editor_relationship(): void
+    {
+        $author = User::create([
+            'name' => 'Author',
+            'email' => 'author@example.com',
+            'password' => 'password',
+        ]);
+
+        $editor = User::create([
+            'name' => 'Editor',
+            'email' => 'editor@example.com',
+            'password' => 'password',
+        ]);
+
+        $discussion = Discussion::create([
+            'title' => 'Test Discussion',
+            'slug' => 'test-discussion',
+            'user_id' => $author->id,
+        ]);
+
+        $post = Post::create([
+            'discussion_id' => $discussion->id,
+            'user_id' => $author->id,
+            'content' => 'Original content',
+            'number' => 1,
+            'edited_user_id' => $editor->id,
+            'edited_at' => now(),
+        ]);
+
+        $this->assertInstanceOf(User::class, $post->editor);
+        $this->assertEquals($editor->id, $post->editor->id);
+    }
 }

@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(composer test:*)",
+      "Bash(composer install:*)",
+      "Bash(composer update:*)",
+      "Bash(vendor/bin/phpunit:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nUpdate to Laravel 11 and add comprehensive test suite\n\n- Update dependencies: PHP ^8.2, Laravel 10/11, Livewire 3, PHPUnit 10/11\n- Migrate Livewire components to v3 \\(emit→dispatch, $listeners→#[On]\\)\n- Update phpunit.xml.dist to PHPUnit 11 schema\n- Add 81 tests covering models, validation rules, events, Livewire components\n- Add CLAUDE.md for Claude Code guidance\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(git tag:*)",
+      "Bash(gh release create:*)"
+    ]
+  }
+}
