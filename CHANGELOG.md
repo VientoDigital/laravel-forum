@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-forum` will be documented in this file
 
+## 2.1.1 - 2026-01-02
+
+### Fixed
+- Fixed hardcoded table names in controller validation rules (now uses config values)
+- Fixed hardcoded route names in controller redirects (now uses config prefix)
+
+### Added
+- Controller tests for Discussion, Post, Tag, and Setting controllers
+- Pivot model tests for DiscussionTag and DiscussionUser
+- Additional relationship tests (lastPost, isRead, editor)
+- Test coverage expanded to 132 tests
+
 ## 2.1.0 - 2026-01-02
 
 ### Added
