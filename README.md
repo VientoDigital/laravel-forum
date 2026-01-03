@@ -7,6 +7,12 @@
 
 An easy to integrate forum to your laravel project. Just customize views, migrations routes and you are done.
 
+## Requirements
+
+- PHP ^8.2
+- Laravel 10.x or 11.x
+- Livewire ^3.0
+
 ## Installation
 
 You can install the package via composer:
