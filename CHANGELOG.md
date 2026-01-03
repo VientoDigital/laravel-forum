@@ -2,6 +2,12 @@
 
 All notable changes to `laravel-forum` will be documented in this file
 
+## 2.1.0 - 2026-01-02
+
+### Added
+- Laravel 12.x support
+- Orchestra Testbench 10.x support
+
 ## 2.0.0 - 2026-01-02
 
 ### Changed
