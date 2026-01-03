@@ -1,8 +1,7 @@
 # Laravel Forum Package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/vientodigital/laravel-forum.svg?style=flat-square)](https://packagist.org/packages/vientodigital/laravel-forum)
-[![Build Status](https://img.shields.io/travis/vientodigital/laravel-forum/master.svg?style=flat-square)](https://travis-ci.org/vientodigital/laravel-forum)
-[![Quality Score](https://img.shields.io/scrutinizer/g/vientodigital/laravel-forum.svg?style=flat-square)](https://scrutinizer-ci.com/g/vientodigital/laravel-forum)
+[![Tests](https://github.com/VientoDigital/laravel-forum/actions/workflows/tests.yml/badge.svg)](https://github.com/VientoDigital/laravel-forum/actions/workflows/tests.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/vientodigital/laravel-forum.svg?style=flat-square)](https://packagist.org/packages/vientodigital/laravel-forum)
 
 An easy to integrate forum to your laravel project. Just customize views, migrations routes and you are done.
