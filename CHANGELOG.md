@@ -2,6 +2,17 @@
 
 All notable changes to `laravel-forum` will be documented in this file
 
+## 3.0.0 - 2026-01-03
+
+### Changed
+- **BREAKING:** Dropped Laravel 10.x support (now requires Laravel 11.x or 12.x)
+- **BREAKING:** Dropped Orchestra Testbench 8.x support (now requires 9.x or 10.x)
+- **BREAKING:** Dropped PHPUnit 10.x support (now requires PHPUnit 11.x)
+
+### Added
+- GitHub Actions CI workflow for automated testing
+- CI badge in README
+
 ## 2.1.1 - 2026-01-02
 
 ### Fixed
